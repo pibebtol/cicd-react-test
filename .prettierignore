@@ -1,0 +1,7 @@
+# build artifacts and dependencies should be ignored 
+build/
+dist/
+
+
+# ignore package-lock.json 
+package-lock.json
