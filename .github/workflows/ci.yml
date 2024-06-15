@@ -1,0 +1,47 @@
+# define name of the workflow which will be displayed on GitHub UI. you can use any name you want to.
+name: Continuous Integration
+
+# # this is trigger CI on push and PR for main branch only
+# on:
+#   # if we push to branch main, then trigger CI
+#   push:
+#     branches: [ main ]
+#   # pr means pull request against any branch
+#   # if we create a pull request, against branch main  then trigger CI
+#   pull_request:
+#     branches: [ main ]
+
+# this will trigger all kind of branches and PRs
+on:
+  push:
+  pull_request:
+
+# jobs is a list of jobs that will be executed in parallel on different runners
+jobs:
+  # build is the name of the job that will be displayed on GitHub UI. you can use any name you want to.
+  build:
+    # runs-on is used to specify the type of runner that will execute the job. you can use any runner you want to.
+    runs-on: ubuntu-latest
+
+    # steps is a list of steps that will be executed in the job
+    steps:
+      # uses is used to specify the action that will be executed. here we are using checkout action to checkout the code.
+      - uses: actions/checkout@v2
+        # with is use to pass the input to the action. here we are passing the input fetch-depth to the checkout action. fetch depth is used to specify the number of commits to fetch. 0 means all history for all branches and tags.
+        with:
+          fetch-depth:
+            0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22.3.0'
+
+      - name: Install Deps
+        run: npm install
+
+      - name: Run linters
+        run: npm run lint
+
+      - name: Run formatters
+        run: npm run format
