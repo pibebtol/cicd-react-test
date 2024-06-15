@@ -1,10 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
+import abcjs from 'abcjs';
 
 function App() {
   const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const task =
+      'X: 1\n' +
+      'M: 4/4\n' +
+      'L: 1/4\n' +
+      'K: Em\n' +
+      'V:1\n' +
+      'V:2 clef=bass octave=-2\n' +
+      '[V:1][eBG]\n' +
+      '[V:2][eb]';
+    abcjs.renderAbc('paper', task);
+  });
 
   return (
     <>
@@ -17,6 +31,7 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
+      <div id="paper"></div>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
