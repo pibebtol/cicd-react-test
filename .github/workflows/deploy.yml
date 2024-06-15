@@ -1,0 +1,47 @@
+# this is the name of continous deployment workflows in github actions.
+name: Continous Deployment
+
+#
+on:
+  push:
+    branches:
+      # we can replace main with other branches that we want to deploy.
+      - main
+
+jobs:
+  # when deployment is start working i want to build my project first and then deploy it.
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      # install nodejs , you can give any name if you want
+      # it will install nodejs version 20.x and set up the action for us.
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.x'
+
+      # install dependencies
+      - name: Install Deps
+        run: npm install
+
+      # build project
+      # it will going to build our project and create a static files for our project beacuse github pages only works with static files. when you have project like next.js which have serverside rendering then its not recommanded to deply your project to github pages. You might want to use vercel, Heroku, aws or other services.
+      - name: Build
+        run: npm run build
+
+      # deploy project
+
+      - name: Deploy to production url
+        # if you have different requirements for deployment suppose your main brach for production and you have another branch for development then you can use this branch option to deploy your project to different branches.
+        if: github.ref == 'refs/heads/main'
+        # you can not change the name of this action.
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          # if uses: JamesIves/github-pages-deploy-action@4.1.4 runs it will automatically cerate new branch which name is gh-pages.
+          branch: gh-pages
+          folder: dist
