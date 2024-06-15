@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
+import fourfour0hz from '/sine_440.ogg';
 import './App.css';
 import abcjs from 'abcjs';
+import H5AudioPlayer from 'react-h5-audio-player';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -32,6 +34,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div id="paper"></div>
+      <H5AudioPlayer src={fourfour0hz}></H5AudioPlayer>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
