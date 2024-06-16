@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import anstimmenTutorLogo from '/anstimmen-tutor-logo.svg';
 import fourfour0hz from '/sine_440.ogg';
 import './App.css';
 import abcjs from 'abcjs';
@@ -93,7 +92,6 @@ const bassobj = {
 const objs = [sop1obj, sop2obj, altoobj, tenorobj, bassobj];
 
 function App() {
-  const [count, setCount] = useState(0);
   const [pitch, setPitch] = useState(0);
   const [clarity, setClarity] = useState(0);
   const [sop1color, setSop1color] = useState('white');
@@ -160,14 +158,15 @@ function App() {
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+        <a
+          href="https://pibebtol.github.io/cicd-react-test"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img src={anstimmenTutorLogo} className="logo" alt="Vite logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>Anstimmen-Tutor</h1>
       <div id="paper"></div>
       <H5AudioPlayer
         showJumpControls={false}
@@ -182,17 +181,6 @@ function App() {
       <p style={{ color: sop1color }}>Sopran 1</p>
       <p style={{ color: 'green' }}>{sop1check}</p>
       <button onClick={playSolution}>Play Solution</button>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 }
