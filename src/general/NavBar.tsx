@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import logo from '/anstimmen-tutor-logo.svg';
+import logo from '/logo.svg';
 import { appName, pages } from './constants.ts';
 
 function NavBar() {
