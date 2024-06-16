@@ -34,6 +34,26 @@ export const pitches = [
   ],
 ];
 
-export const notes = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+export const notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+export const full_notes = [
+  'C',
+  'C#',
+  'D',
+  'D#',
+  'E',
+  'F',
+  'F#',
+  'G',
+  'G#',
+  'A',
+  'A#',
+  'B',
+];
+
+export const major = [0, 2, 4, 5, 7, 9, 11, 12];
 
 export const minor = [0, 2, 3, 5, 7, 8, 10, 12];
+
+export const easy_note_configs = [[2, 0, 4, 0]];
+
+export const easy_keys = ['C', 'D', 'E', 'Cm', 'Dm', 'Em'];

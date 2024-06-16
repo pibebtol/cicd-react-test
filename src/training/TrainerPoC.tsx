@@ -6,19 +6,43 @@ import { Box, Button } from '@mui/material';
 import NavBar from '../general/NavBar.tsx';
 import Kammerton from './Kammerton.tsx';
 import { Voice } from './types.ts';
-import { pitches } from './constants.ts';
+import { easy_keys, easy_note_configs } from './constants.ts';
+import {
+  generateMen,
+  generateSolution,
+  generateWomen,
+  getPitch,
+  getRandomInt,
+} from './task-generator.ts';
+
+const key = easy_keys[getRandomInt(5)];
+const note_config = easy_note_configs[0];
 
 const solution =
-  'X: 1\n' + 'M: 4/4\n' + 'L: 1/4\n' + 'K: Am\n' + 'V:1\n' + '[V:1]eBGBE';
+  'X: 1\n' +
+  'M: 4/4\n' +
+  'L: 1/4\n' +
+  'K: ' +
+  key +
+  '\n' +
+  'V:1\n' +
+  '[V:1]' +
+  generateSolution(key, note_config);
 const task =
   'X: 1\n' +
   'M: 4/4\n' +
   'L: 1/4\n' +
-  'K: Em\n' +
+  'K: ' +
+  key +
+  '\n' +
   'V:1\n' +
-  'V:2 clef=bass octave=-2\n' +
-  '[V:1][eG]||\n' +
-  '[V:2][eb]||';
+  'V:2 clef=bass octave=-1\n' +
+  '[V:1][' +
+  generateWomen(key, note_config) +
+  ']||\n' +
+  '[V:2][' +
+  generateMen(key, note_config) +
+  ']||';
 
 function playSolution() {
   if (abcjs.synth.supportsAudio()) {
@@ -46,28 +70,20 @@ function playSolution() {
 }
 
 const sopobj = {
-  pitch: pitches[4][4],
+  pitch: getPitch(key, note_config, 0),
   count: 0,
-  ele: 'sop1',
-  eleCheck: 'sop1check',
 };
 const altoobj = {
-  pitch: pitches[3][7],
+  pitch: getPitch(key, note_config, 1),
   count: 0,
-  ele: 'alto',
-  eleCheck: 'altocheck',
 };
 const tenorobj = {
-  pitch: pitches[3][11],
+  pitch: getPitch(key, note_config, 2),
   count: 0,
-  ele: 'tenor',
-  eleCheck: 'tenorcheck',
 };
 const bassobj = {
-  pitch: pitches[3][4],
+  pitch: getPitch(key, note_config, 3),
   count: 0,
-  ele: 'bass',
-  eleCheck: 'basscheck',
 };
 
 const objs = [sopobj, altoobj, tenorobj, bassobj];
@@ -75,8 +91,14 @@ const objs = [sopobj, altoobj, tenorobj, bassobj];
 function TrainerPoC() {
   const [pitch, setPitch] = useState(0);
   const [clarity, setClarity] = useState(0);
-  const [sop1color, setSop1color] = useState('white');
-  const [sop1check, setSop1check] = useState('');
+  const [sopColor, setSopColor] = useState('white');
+  const [sopCheck, setSopCheck] = useState('');
+  const [altoColor, setAltoColor] = useState('white');
+  const [altoCheck, setAltoCheck] = useState('');
+  const [tenorColor, setTenorColor] = useState('white');
+  const [tenorCheck, setTenorCheck] = useState('');
+  const [bassColor, setBassColor] = useState('white');
+  const [bassCheck, setBassCheck] = useState('');
 
   useEffect(() => {
     abcjs.renderAbc('paper', task);
@@ -89,7 +111,7 @@ function TrainerPoC() {
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
       audioContext.createMediaStreamSource(stream).connect(analyserNode);
       const detector = PitchDetector.forFloat32Array(analyserNode.fftSize);
-      detector.minVolumeDecibels = -40;
+      detector.minVolumeDecibels = -20;
       const input = new Float32Array(detector.inputLength);
       updatePitch(analyserNode, detector, input, audioContext.sampleRate);
     });
@@ -118,21 +140,51 @@ function TrainerPoC() {
     );
   }
 
+  function setColor(length: number, color: string) {
+    if (length === 4) {
+      setSopColor(color);
+    }
+    if (length === 3) {
+      setAltoColor(color);
+    }
+    if (length === 2) {
+      setTenorColor(color);
+    }
+    if (length === 1) {
+      setBassColor(color);
+    }
+  }
+
+  function setCheck(length: number) {
+    if (length === 4) {
+      setSopCheck('> correct');
+    }
+    if (length === 3) {
+      setAltoCheck('> correct');
+    }
+    if (length === 2) {
+      setTenorCheck('> correct');
+    }
+    if (length === 1) {
+      setBassCheck('> correct');
+    }
+  }
+
   function checkPitch(pitch: number, clarity: number, obj: Voice) {
     if (clarity < 95) {
-      setSop1color('grey');
+      setColor(objs.length, 'grey');
       return;
     }
     if (pitch > obj.pitch * 0.95 && pitch < obj.pitch * 1.05) {
-      setSop1color('green');
+      setColor(objs.length, 'green');
       obj.count = obj.count + 1;
       if (obj.count === 10) {
-        setSop1check('correct');
+        setCheck(objs.length);
         objs.shift();
         console.log(objs);
       }
     } else {
-      setSop1color('red');
+      setColor(objs.length, 'red');
     }
   }
 
@@ -143,13 +195,19 @@ function TrainerPoC() {
         <div id="paper" style={{ maxWidth: '200px' }}></div>
       </Box>
       <Kammerton />
-      <p>Pitch: {pitch}</p>
-      <p>Clarity: {clarity}</p>
+      <p hidden>Pitch: {pitch}</p>
+      <p hidden>Clarity: {clarity}</p>
       <Button onClick={() => audioContext.resume()}>
         Resume Audio Context
       </Button>
-      <p style={{ color: sop1color }}>Sopran 1</p>
-      <p style={{ color: 'green' }}>{sop1check}</p>
+      <p style={{ color: sopColor }}>Sopran</p>
+      <p style={{ color: 'green' }}>{sopCheck}</p>
+      <p style={{ color: altoColor }}>Alto</p>
+      <p style={{ color: 'green' }}>{altoCheck}</p>
+      <p style={{ color: tenorColor }}>Tenor</p>
+      <p style={{ color: 'green' }}>{tenorCheck}</p>
+      <p style={{ color: bassColor }}>Bass</p>
+      <p style={{ color: 'green' }}>{bassCheck}</p>
       <Button onClick={playSolution}>Play Solution</Button>
     </>
   );
