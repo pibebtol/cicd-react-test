@@ -5,6 +5,7 @@ import {
   generateWomen,
   getPitch,
 } from '../src/training/task-generator.ts';
+import { pitches } from '../src/training/constants.ts';
 
 describe('generate women voices', () => {
   it('returns ec for C easy', () => {
@@ -46,10 +47,19 @@ describe('generate solution', () => {
 });
 
 describe('get pitch', () => {
-  it('returns 164.81 for C 0', () => {
-    expect(getPitch('C', [2, 0, 4, 0], 0)).toBe(164.81);
+  it('returns correct pitch for C 0', () => {
+    expect(getPitch('C', [2, 0, 4, 0], 0)).toBe(pitches[3][4]);
   });
-  it('returns 246.94 for Em 2', () => {
-    expect(getPitch('Em', [2, 0, 4, 0], 2)).toBe(246.94);
+  it('returns correct pitch for C 0', () => {
+    expect(getPitch('C', [2, 0, 4, 0], 1)).toBe(pitches[3][0]);
+  });
+  it('returns correct pitch for Em 2', () => {
+    expect(getPitch('Em', [2, 0, 4, 0], 2)).toBe(pitches[3][11]);
+  });
+  it('returns correct pitch for Em 0', () => {
+    expect(getPitch('Em', [2, 0, 4, 0], 0)).toBe(pitches[3][7]);
+  });
+  it('returns correct pitch for D 0', () => {
+    expect(getPitch('D', [2, 0, 4, 0], 0)).toBe(pitches[3][6]);
   });
 });
