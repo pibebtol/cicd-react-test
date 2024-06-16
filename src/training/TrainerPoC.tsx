@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import fourfour0hz from '/sine_440.ogg';
 import '../App.css';
 import abcjs from 'abcjs';
-import H5AudioPlayer from 'react-h5-audio-player';
 import { PitchDetector } from 'pitchy';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import NavBar from '../general/NavBar.tsx';
+import Kammerton from './Kammerton.tsx';
 
 const solution =
   'X: 1\n' + 'M: 4/4\n' + 'L: 1/4\n' + 'K: Am\n' + 'V:1\n' + '[V:1]eBGBE';
@@ -16,8 +15,8 @@ const task =
   'K: Em\n' +
   'V:1\n' +
   'V:2 clef=bass octave=-2\n' +
-  '[V:1][eBG]\n' +
-  '[V:2][eb]';
+  '[V:1][eG]||\n' +
+  '[V:2][eb]||';
 
 function playSolution() {
   if (abcjs.synth.supportsAudio()) {
@@ -59,17 +58,11 @@ interface Voice {
   ele: string;
   eleCheck: string;
 }
-const sop1obj = {
+const sopobj = {
   pitch: oct4[4],
   count: 0,
   ele: 'sop1',
   eleCheck: 'sop1check',
-};
-const sop2obj = {
-  pitch: oct3[11],
-  count: 0,
-  ele: 'sop2',
-  eleCheck: 'sop2check',
 };
 const altoobj = {
   pitch: oct3[7],
@@ -90,7 +83,7 @@ const bassobj = {
   eleCheck: 'basscheck',
 };
 
-const objs = [sop1obj, sop2obj, altoobj, tenorobj, bassobj];
+const objs = [sopobj, altoobj, tenorobj, bassobj];
 
 function TrainerPoC() {
   const [pitch, setPitch] = useState(0);
@@ -159,12 +152,10 @@ function TrainerPoC() {
   return (
     <>
       <NavBar></NavBar>
-      <div id="paper"></div>
-      <H5AudioPlayer
-        showJumpControls={false}
-        volume={0.1}
-        src={fourfour0hz}
-      ></H5AudioPlayer>
+      <Box component="div" display="flex" alignItems="center">
+        <div id="paper" style={{ maxWidth: '200px' }}></div>
+      </Box>
+      <Kammerton />
       <p>Pitch: {pitch}</p>
       <p>Clarity: {clarity}</p>
       <Button onClick={() => audioContext.resume()}>
