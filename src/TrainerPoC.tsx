@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import anstimmenTutorLogo from '/anstimmen-tutor-logo.svg';
 import fourfour0hz from '/sine_440.ogg';
 import './App.css';
 import abcjs from 'abcjs';
