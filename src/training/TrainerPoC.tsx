@@ -5,6 +5,8 @@ import { PitchDetector } from 'pitchy';
 import { Box, Button } from '@mui/material';
 import NavBar from '../general/NavBar.tsx';
 import Kammerton from './Kammerton.tsx';
+import { Voice } from './types.ts';
+import { pitches } from './constants.ts';
 
 const solution =
   'X: 1\n' + 'M: 4/4\n' + 'L: 1/4\n' + 'K: Am\n' + 'V:1\n' + '[V:1]eBGBE';
@@ -43,41 +45,26 @@ function playSolution() {
   }
 }
 
-const oct3 = [
-  130.81, 138.59, 146.83, 155.56, 164.81, 174.61, 185, 196, 207.65, 220, 233.08,
-  246.94,
-];
-const oct4 = [
-  261.63, 277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440,
-  466.16, 493.88,
-];
-
-interface Voice {
-  pitch: number;
-  count: number;
-  ele: string;
-  eleCheck: string;
-}
 const sopobj = {
-  pitch: oct4[4],
+  pitch: pitches[4][4],
   count: 0,
   ele: 'sop1',
   eleCheck: 'sop1check',
 };
 const altoobj = {
-  pitch: oct3[7],
+  pitch: pitches[3][7],
   count: 0,
   ele: 'alto',
   eleCheck: 'altocheck',
 };
 const tenorobj = {
-  pitch: oct3[11],
+  pitch: pitches[3][11],
   count: 0,
   ele: 'tenor',
   eleCheck: 'tenorcheck',
 };
 const bassobj = {
-  pitch: oct3[4],
+  pitch: pitches[3][4],
   count: 0,
   ele: 'bass',
   eleCheck: 'basscheck',
