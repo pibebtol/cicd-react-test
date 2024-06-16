@@ -11,20 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import logo from '/anstimmen-tutor-logo.svg';
-
-const basePath = '/cicd-react-test/';
-const pages: Page[] = [
-  { title: 'Home', path: basePath },
-  { title: 'Quick Training', path: basePath + 'train' },
-  { title: 'Configure', path: basePath + 'configure' },
-  { title: 'About', path: basePath + 'about' },
-];
-const appName = 'Anstimmen Trainer';
-
-interface Page {
-  title: string;
-  path: string;
-}
+import { appName, pages } from './constants.ts';
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(

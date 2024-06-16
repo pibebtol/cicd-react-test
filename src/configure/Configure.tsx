@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import NavBar from './NavBar.tsx';
+import NavBar from '../general/NavBar.tsx';
 
 export default function Configure() {
   return (

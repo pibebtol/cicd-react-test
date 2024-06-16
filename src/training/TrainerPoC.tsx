@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import fourfour0hz from '/sine_440.ogg';
-import './App.css';
+import '../App.css';
 import abcjs from 'abcjs';
 import H5AudioPlayer from 'react-h5-audio-player';
 import { PitchDetector } from 'pitchy';
 import { Button } from '@mui/material';
-import NavBar from './NavBar.tsx';
+import NavBar from '../general/NavBar.tsx';
 
 const solution =
   'X: 1\n' + 'M: 4/4\n' + 'L: 1/4\n' + 'K: Am\n' + 'V:1\n' + '[V:1]eBGBE';

@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
-import NavBar from './NavBar.tsx';
+import NavBar from '../general/NavBar.tsx';
 
-export default function About() {
+export default function Home() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <NavBar></NavBar>
