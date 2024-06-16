@@ -4,6 +4,7 @@ import {
   generateSolution,
   generateWomen,
   getPitch,
+  getRandomInt,
 } from '../src/training/task-generator.ts';
 import { pitches } from '../src/training/constants.ts';
 
@@ -61,5 +62,13 @@ describe('get pitch', () => {
   });
   it('returns correct pitch for D 0', () => {
     expect(getPitch('D', [2, 0, 4, 0], 0)).toBe(pitches[3][6]);
+  });
+});
+
+describe('get random', () => {
+  it('returns random int between 0 and 9', () => {
+    const rand = getRandomInt(3);
+    expect(rand).toBeGreaterThanOrEqual(0);
+    expect(2).toBeGreaterThanOrEqual(rand);
   });
 });

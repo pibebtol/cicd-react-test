@@ -15,7 +15,7 @@ import {
   getRandomInt,
 } from './task-generator.ts';
 
-const key = easy_keys[getRandomInt(5)];
+const key = easy_keys[getRandomInt(easy_keys.length)];
 const note_config = easy_note_configs[0];
 
 const solution =

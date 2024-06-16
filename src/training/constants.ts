@@ -56,4 +56,15 @@ export const minor = [0, 2, 3, 5, 7, 8, 10, 12];
 
 export const easy_note_configs = [[2, 0, 4, 0]];
 
-export const easy_keys = ['C', 'D', 'E', 'Cm', 'Dm', 'Em'];
+export const easy_keys = [
+  'C',
+  'Cm',
+  'C#m',
+  'Db',
+  'D',
+  'Dm',
+  'D#m',
+  'Eb',
+  'E',
+  'Em',
+];
